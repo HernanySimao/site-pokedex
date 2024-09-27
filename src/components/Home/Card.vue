@@ -31,7 +31,7 @@ defineProps({
           class="col-md-4 mb-5 mt-5 d-flex align-items-center"
         >
           <div
-            @click="sendId(123)"
+            @click="sendId(useGetNumber(item?.url))"
             class="card w-100 cursor-pointer d-flex flex-column align-items-center position-relative"
           >
             <div
