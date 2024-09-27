@@ -1,6 +1,18 @@
-<script lang="ts" setup>
-import { reactive } from "vue";
+<script   setup>
+import { reactive, ref } from "vue";
 import HomeCard from "./Card.vue";
+
+defineProps({
+  data: {
+    type: Object,
+    required: true,
+    default: () => [],
+  },
+});
+
+const imgUrl = ref(
+  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/"
+);
 
 const filterTypes = reactive([
   {
@@ -58,7 +70,7 @@ const filterTypes = reactive([
               </div>
             </div>
           </div>
-          <HomeCard class="mt-5"> </HomeCard>
+          <HomeCard :data="data" :image="imgUrl" class="mt-5"> </HomeCard>
         </div>
         <div class="col-md-4">
           <main>

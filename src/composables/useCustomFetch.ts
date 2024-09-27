@@ -1,4 +1,3 @@
-// composables/useCustomFetch.ts
 export const useCustomFetch = async <T>(endpoint: string, opts?: RequestInit): Promise<T> => {
   const baseURL = import.meta.env.VITE_API_URL;
 
