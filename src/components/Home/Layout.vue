@@ -85,7 +85,6 @@ const filterTypes = reactive([
   width: 25px
 
 .card
-  border-radius: 10px
   .card-body
     padding: 10px
 </style>
