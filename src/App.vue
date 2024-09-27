@@ -1,9 +1,13 @@
-<script setup lang="ts">
+<script setup>
+import HomeLayout from "./components/Home/Layout.vue";
+import HomeDetails from "./components/Home/Details.vue";
 </script>
 
 <template>
   <div>
-    <h1 class="teste">Teste</h1>
+    <HomeLayout>
+      <HomeDetails> </HomeDetails>
+    </HomeLayout>
   </div>
 </template>
 
