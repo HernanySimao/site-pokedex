@@ -8,7 +8,7 @@ import { onMounted, ref } from "vue";
 const pokemonData = ref(null);
 onMounted(async () => {
   try {
-    const data = await useCustomFetch("pokemon/?limit=10&offset=20");
+    const data = await useCustomFetch("pokemon/?limit=30&offset=24");
     pokemonData.value = data?.results;
   } catch (error) {
     console.error(error);

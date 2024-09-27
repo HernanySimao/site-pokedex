@@ -1,5 +1,12 @@
 <script setup>
 import { useGetNumber } from "../../composables/useGetNumber";
+import { useIdStore } from "../../stores/useIdStore";
+
+const idStore = useIdStore();
+
+const sendId = (id) => {
+  idStore.setId(id);
+};
 defineProps({
   data: {
     type: Object,
@@ -16,27 +23,30 @@ defineProps({
 
 <template>
   <section>
-    {{ data }}
     <div class="container">
       <div class="row">
         <div
           v-for="(item, i) in data"
           :key="i"
-          class="col-md-4 mb-4 d-flex align-items-stretch"
+          class="col-md-4 mb-5 mt-5 d-flex align-items-center"
         >
-          <div class="card w-100">
-            <div class="card-body">
-              <div class="d-flex justify-content-center">
+          <div
+            @click="sendId(123)"
+            class="card w-100 cursor-pointer d-flex flex-column align-items-center position-relative"
+          >
+            <div
+              class="card-body d-flex flex-column align-items-center justify-content-center"
+            >
+              <div class="d-flex justify-content-center mb-3">
                 <img
                   class="poke-image"
                   :src="image + useGetNumber(item?.url) + '.svg'"
                   alt="image"
                 />
               </div>
-              <div class="text-center">
+              <div class="text-center mt-5">
                 <span>Nº {{ useGetNumber(item?.url) }} </span>
                 <h2 class="text-capitalize">{{ item.name }}</h2>
-                <button>Tipo</button>
               </div>
             </div>
           </div>
@@ -47,6 +57,13 @@ defineProps({
 </template>
 
 <style lang="sass" scoped>
+.card
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px
+  border: none
+  height: 200px
+
 .poke-image
   width: 100px
+  position: absolute
+  top: -50px
 </style>
