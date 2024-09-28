@@ -75,7 +75,11 @@ const filteredData = computed(() => {
               :key="i"
               class="col-md-3 mt-4 ms-3 cursor-pointer"
             >
-              <div @click="selected = type.id" class="card text-center">
+              <div
+                @click="selected = type.id"
+                class="card text-center"
+                :class="{ active: selected == type.id }"
+              >
                 <div class="card-body">
                   <div>
                     <img
@@ -129,4 +133,8 @@ const filteredData = computed(() => {
 .card
   .card-body
     padding: 10px
+
+.active
+  border: 1px solid #F0C900
+  border-radius: 10px
 </style>
