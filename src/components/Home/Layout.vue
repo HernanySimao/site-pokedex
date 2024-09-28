@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, ref, computed } from "vue";
 import HomeCard from "./Card.vue";
+import { useGetNumber } from "../../composables/useGetNumber"; // Ajuste o caminho conforme necessário
 
 const { data } = defineProps({
   data: {
@@ -32,9 +33,16 @@ const selected = ref(1);
 const search = ref("");
 
 const filteredData = computed(() => {
-  return data.filter((item) =>
-    item.name.toLowerCase().includes(search.value.toLowerCase())
-  );
+  return data.filter((item) => {
+    const number = useGetNumber(item.url);
+
+    if (selected.value === 1) {
+      return item.name.toLowerCase().includes(search.value.toLowerCase());
+    } else if (selected.value === 2) {
+      return number && number.includes(search.value);
+    }
+    return false;
+  });
 });
 </script>
 
@@ -48,7 +56,9 @@ const filteredData = computed(() => {
               <input
                 v-model="search"
                 type="text"
-                placeholder="Pesquisar por"
+                :placeholder="`Pesquisar por ${
+                  selected == 1 ? 'Nome' : 'Número'
+                }`"
                 class="form-control"
               />
               <img
@@ -65,7 +75,7 @@ const filteredData = computed(() => {
               :key="i"
               class="col-md-3 mt-4 ms-3 cursor-pointer"
             >
-              <div @click="selected.value = type.id" class="card text-center">
+              <div @click="selected = type.id" class="card text-center">
                 <div class="card-body">
                   <div>
                     <img
@@ -80,8 +90,14 @@ const filteredData = computed(() => {
             </div>
           </div>
 
-          <!-- Use filteredData here -->
-          <HomeCard :data="filteredData" class="mt-5"></HomeCard>
+          <HomeCard
+            v-if="filteredData.length"
+            :data="filteredData"
+            class="mt-5"
+          ></HomeCard>
+          <div class="text-center mt-5 mb-5 p-5" v-else>
+            <span>Não encontramos nada, tente novamente</span>
+          </div>
         </div>
         <div class="col-md-5">
           <main>
