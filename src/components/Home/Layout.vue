@@ -10,10 +10,6 @@ defineProps({
   },
 });
 
-const imgUrl = ref(
-  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/"
-);
-
 const filterTypes = reactive([
   {
     name: "Nome",
@@ -70,7 +66,7 @@ const filterTypes = reactive([
               </div>
             </div>
           </div>
-          <HomeCard :data="data" :image="imgUrl" class="mt-5"> </HomeCard>
+          <HomeCard :data="data" class="mt-5"> </HomeCard>
         </div>
         <div class="col-md-5">
           <main>

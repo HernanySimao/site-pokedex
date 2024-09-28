@@ -7,16 +7,14 @@ const idStore = useIdStore();
 const sendId = (id) => {
   idStore.setId(id);
 };
+
+const image = import.meta.env.VITE_URL_ASSET;
+
 defineProps({
   data: {
     type: Object,
     required: true,
     default: () => [],
-  },
-
-  image: {
-    type: String,
-    required: true,
   },
 });
 </script>
