@@ -42,15 +42,15 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
     <div class="container">
       <div class="row">
         <div class="card">
-          <div class="card-body text-center">
-            <div>
+          <div v-if="data" class="card-body text-center">
+            <div class="mb-4">
               <img class="pokemon" :src="image + id + '.svg'" :alt="id" />
             </div>
-            <span>Nº {{ id }} </span>
+            <span>#{{ id }} </span>
 
             <h1>Estatísticas</h1>
             <div
-              class="d-flex justify-content-center flex-wrap text-center mb-5 cursor-pointer"
+              class="d-flex justify-content-center flex-wrap text-center mb-5"
             >
               <div
                 class="stats col-md-4"
@@ -58,7 +58,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
                 :key="i"
               >
                 <span class="text-uppercase">
-                  {{ status?.stat?.name }} {{ status?.base_stat }}
+                  {{ status?.stat?.name }} » {{ status?.base_stat }}
                 </span>
               </div>
             </div>
@@ -94,6 +94,10 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="text-center p-5 mt-5 mb-5" v-else>
+            <span>Selecione um Pokemon</span>
           </div>
         </div>
       </div>

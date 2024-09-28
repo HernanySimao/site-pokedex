@@ -1,10 +1,10 @@
-<script   setup>
-import { reactive, ref } from "vue";
+<script setup>
+import { reactive, ref, computed } from "vue";
 import HomeCard from "./Card.vue";
 
-defineProps({
+const { data } = defineProps({
   data: {
-    type: Object,
+    type: Array,
     required: true,
     default: () => [],
   },
@@ -12,23 +12,31 @@ defineProps({
 
 const filterTypes = reactive([
   {
+    id: 1,
     name: "Nome",
-    type: null,
     image: "/image/game-control.png",
   },
   {
+    id: 2,
     name: "Número",
-    type: null,
     image: "/image/gamex.png",
   },
   {
+    id: 3,
     name: "Tipo",
-    type: "button",
     image: "/image/eggs.png",
   },
 ]);
-</script>
 
+const selected = ref(1);
+const search = ref("");
+
+const filteredData = computed(() => {
+  return data.filter((item) =>
+    item.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+});
+</script>
 
 <template>
   <section>
@@ -38,14 +46,15 @@ const filterTypes = reactive([
           <div>
             <div class="position-relative">
               <input
+                v-model="search"
                 type="text"
-                placeholder="Pesquisa o seu pokemon"
+                placeholder="Pesquisar por"
                 class="form-control"
               />
               <img
                 class="position-absolute icon"
                 src="/image/browser.png"
-                alt=""
+                alt="Ícone de pesquisa"
               />
             </div>
           </div>
@@ -56,21 +65,27 @@ const filterTypes = reactive([
               :key="i"
               class="col-md-3 mt-4 ms-3 cursor-pointer"
             >
-              <div class="card text-center">
+              <div @click="selected.value = type.id" class="card text-center">
                 <div class="card-body">
                   <div>
-                    <img class="icon-filter" :src="type?.image" alt="" />
+                    <img
+                      class="icon-filter"
+                      :src="type?.image"
+                      alt="Ícone de filtro"
+                    />
                     <span class="ms-3"> {{ type.name }} </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <HomeCard :data="data" class="mt-5"> </HomeCard>
+
+          <!-- Use filteredData here -->
+          <HomeCard :data="filteredData" class="mt-5"></HomeCard>
         </div>
         <div class="col-md-5">
           <main>
-            <slot> </slot>
+            <slot></slot>
           </main>
         </div>
       </div>
@@ -83,6 +98,9 @@ const filterTypes = reactive([
   padding: 20px
   border-radius: 10px
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px
+  padding-right: 80px
+  &:focus-visible
+    border-color: #F0C900 !important
 
 .icon
   width: 40px

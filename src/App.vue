@@ -8,7 +8,7 @@ import { useGetNumber } from "./composables/useGetNumber";
 import { onMounted, ref, watch } from "vue";
 
 const idStore = useIdStore();
-const pokemonData = ref(null);
+const pokemonData = ref([]);
 const pokemon = ref(null);
 const pokemonEvaluation = ref(null);
 const evaluation = ref(null);

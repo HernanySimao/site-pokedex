@@ -43,7 +43,7 @@ defineProps({
                 />
               </div>
               <div class="text-center mt-5">
-                <span>Nº {{ useGetNumber(item?.url) }} </span>
+                <span>#{{ useGetNumber(item?.url) }} </span>
                 <h3 class="text-capitalize">{{ item.name }}</h3>
               </div>
             </div>
