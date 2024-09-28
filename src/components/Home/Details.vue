@@ -1,5 +1,6 @@
 <script setup>
 import { useGetNumber } from "../../composables/useGetNumber";
+import { getTypeColor } from "../../composables/useGetTypeColor";
 
 const { evaluation } = defineProps({
   data: {
@@ -40,49 +41,61 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
   <section>
     <div class="container">
       <div class="row">
-        <div class="card text-center">
-          <div class="card-body">
+        <div class="card">
+          <div class="card-body text-center">
             <div><img :src="image + id + '.svg'" alt="" /></div>
             <span>Nº {{ id }} </span>
 
-            <div v-if="false" class="d-flex justify-content-center flex-wrap">
+            <h1>Estatísticas</h1>
+            <div
+              class="d-flex justify-content-center flex-wrap text-center mb-5"
+            >
               <div
                 class="stats col-md-3"
-                v-for="(status, i) in data.stats"
+                v-for="(status, i) in data?.stats"
                 :key="i"
               >
                 <span class="text-capitalize">
-                  {{ status.stat.name }} {{ status.base_stat }}
+                  {{ status?.stat?.name }} {{ status?.base_stat }}
                 </span>
               </div>
             </div>
 
-            <div v-if="false" class="d-flex justify-content-center flex-wrap">
+            <h1>Tipos</h1>
+
+            <div class="d-flex justify-content-center flex-wrap mb-5">
               <div
                 class="stats col-md-3"
-                v-for="(type, i) in data.types"
+                v-for="(type, i) in data?.types"
                 :key="i"
+                :style="{
+                  'background-color': getTypeColor(type?.type?.name),
+                }"
               >
                 <span class="text-capitalize">
-                  {{ type.type.name }}
+                  {{ type?.type?.name }} {{ getTypeColor(type?.type?.name) }}
                 </span>
               </div>
             </div>
 
-            {{ evaluation?.chain?.species?.name }}
+            <h1 class="mb-4">Evoluções</h1>
+
             <div class="d-flex justify-content-center flex-wrap">
               <div
-                class="stats col-md-3"
+                class="col-md-3 align-items-center"
                 v-for="(evolution, i) in getEvolutions(evaluation?.chain)"
                 :key="i"
               >
-                <img
-                  :src="image + useGetNumber(evolution?.url) + '.svg'"
-                  alt=""
-                />
-                <span class="text-capitalize">
-                  {{ evolution?.name }}
-                </span>
+                <div v-if="id != useGetNumber(evolution?.url)">
+                  <img
+                    class="evolution"
+                    :src="image + useGetNumber(evolution?.url) + '.svg'"
+                    :alt="evolution?.url"
+                  />
+                  <span class="text-capitalize">
+                    {{ evolution?.name }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -93,6 +106,11 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
 </template>
 
 <style lang="sass" scoped>
+.evolution
+  width: 100px
+  height: 100px
+  object-fit: contain
+
 .stats
   border: 1px solid #8EB0FF
   border-radius: 18px
