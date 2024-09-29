@@ -13,15 +13,6 @@ const pokemon = ref(null);
 const pokemonEvaluation = ref(null);
 const evaluation = ref(null);
 
-onMounted(async () => {
-  try {
-    const data = await useCustomFetch("pokemon/?limit=10&offset=0");
-    pokemonData.value = data?.results;
-  } catch (error) {
-    console.error(error);
-  }
-});
-
 const get = async () => {
   try {
     const data = await useCustomFetch(`pokemon/${idStore?.selectedId}`);
@@ -53,7 +44,7 @@ watch(
 
 <template>
   <div>
-    <HomeLayout :data="pokemonData">
+    <HomeLayout>
       <HomeDetails
         :data="pokemon"
         :id="idStore?.selectedId"

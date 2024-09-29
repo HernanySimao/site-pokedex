@@ -4,24 +4,26 @@ import HomeCard from "./Card.vue";
 import { useGetNumber } from "../../composables/useGetNumber";
 import { useCustomFetch } from "../../composables/useCustomFetch";
 
-const { data } = defineProps({
-  data: {
-    type: Array,
-    required: true,
-    default: () => [],
-  },
-});
-
 const pokemons = ref([]);
-const fetchInitialPokemons = async () => {
+const nextPage = ref(null);
+const previousPage = ref(null);
+
+const fetchPokemons = async (url = "pokemon/?limit=6&offset=0") => {
   try {
-    const response = await useCustomFetch("pokemon?limit=10");
+    const response = await useCustomFetch(url);
     pokemons.value = response.results.map((p) => ({
       name: p.name,
       url: p.url,
     }));
+    nextPage.value = response.next
+      ? response.next.replace(import.meta.env.VITE_API_URL, "")
+      : null;
+
+    previousPage.value = response.previous
+      ? response.previous.replace(import.meta.env.VITE_API_URL, "")
+      : null;
   } catch (error) {
-    console.error("Erro ao buscar lista inicial de Pokémon:", error);
+    console.error("Erro ao buscar lista de Pokémon:", error);
   }
 };
 
@@ -56,13 +58,13 @@ const fetchPokemonsByType = async () => {
       }
     }
   } else {
-    fetchInitialPokemons();
+    fetchPokemons();
   }
 };
 
 onMounted(() => {
   fetchTypes();
-  fetchInitialPokemons();
+  fetchPokemons();
 });
 
 const searchType = ref(1);
@@ -150,6 +152,23 @@ const filteredData = computed(() => {
           <div class="text-center mt-5 mb-5 p-5" v-else>
             <span>Não encontramos nada, tente novamente</span>
           </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <button
+              @click="fetchPokemons(previousPage)"
+              :disabled="!previousPage"
+              class="btn button-primary"
+            >
+              Anterior
+            </button>
+            <button
+              @click="fetchPokemons(nextPage)"
+              :disabled="!nextPage"
+              class="btn button-primary"
+            >
+              Próximo
+            </button>
+          </div>
         </div>
 
         <div class="col-md-5">
@@ -161,6 +180,7 @@ const filteredData = computed(() => {
     </div>
   </section>
 </template>
+
 
 <style lang="sass" scoped>
 .form-control
