@@ -36,7 +36,7 @@ const routeList = routes;
                 >
                   <router-link
                     :class="{ active: url.fullPath == route.path }"
-                    class="nav-link ms-2"
+                    class="nav-link ms-2 fw-bold"
                     :to="route.path"
                     >{{ route.name }}</router-link
                   >
