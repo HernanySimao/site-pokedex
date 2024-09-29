@@ -9,7 +9,6 @@ const idStore = useIdStore();
 
 const savedItems = ref(JSON.parse(localStorage.getItem("savedItems")) || []);
 
-// Computed property para verificar se um item está salvo
 const isItemSaved = (url) => {
   return savedItems.value.some((savedItem) => savedItem.url === url);
 };
@@ -25,7 +24,6 @@ const saveToLocalStorage = (item) => {
   );
 
   if (!existingItem) {
-    // Se não estiver salvo, adiciona ao localStorage
     savedItems.value.push({
       id: useGetNumber(item.url), // Adiciona o ID ao salvar
       name: item.name,
