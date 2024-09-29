@@ -12,6 +12,7 @@ const { data } = defineProps({
   },
 });
 
+const pokemons = ref([]);
 const fetchInitialPokemons = async () => {
   try {
     const response = await useCustomFetch("pokemon?limit=10");
@@ -26,7 +27,6 @@ const fetchInitialPokemons = async () => {
 
 const types = ref([]);
 const selectedType = ref("");
-const pokemons = ref([]);
 
 const fetchTypes = async () => {
   try {
@@ -132,7 +132,7 @@ const filteredData = computed(() => {
               >
                 <option selected disabled value="">Selecionar Tipo</option>
                 <option
-                  v-for="type in types"
+                  v-for="type in types.slice(0, -1)"
                   :key="type.name"
                   :value="type.name"
                 >
