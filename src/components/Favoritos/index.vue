@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import Card from "../Card.vue";
+import AOS from "aos";
 
 defineProps({
   data: {
@@ -24,6 +25,7 @@ const loadFavorites = () => {
 
 onMounted(() => {
   loadFavorites();
+  AOS.refresh();
 });
 
 const clearSavedItems = () => {
@@ -78,7 +80,7 @@ const cancelClear = () => {
         </div>
       </div>
 
-      <div v-if="favorites.length">
+      <div data-aos="fade-up" v-if="favorites.length">
         <Card :data="favorites"></Card>
       </div>
       <div class="mt-5 p-5 text-center" v-else>

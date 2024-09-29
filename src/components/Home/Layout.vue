@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import AOS from "aos";
 import Card from "../Card.vue";
 import { useGetNumber } from "../../composables/useGetNumber";
 import { useCustomFetch } from "../../composables/useCustomFetch";
@@ -64,6 +65,7 @@ const fetchPokemonsByType = async () => {
 onMounted(() => {
   fetchTypes();
   fetchPokemons();
+  AOS.refresh();
 });
 
 const searchType = ref(1);
@@ -145,6 +147,7 @@ const filteredData = computed(() => {
           </div>
 
           <Card
+            data-aos="fade-up"
             v-if="filteredData.length"
             :data="filteredData"
             class="mt-5 pt-5"
@@ -154,6 +157,7 @@ const filteredData = computed(() => {
           </div>
 
           <div
+            data-aos="fade-up"
             v-if="filteredData.length"
             class="d-flex justify-content-between mt-4"
           >
@@ -174,7 +178,7 @@ const filteredData = computed(() => {
           </div>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-5" data-aos="fade-left">
           <main>
             <slot></slot>
           </main>
