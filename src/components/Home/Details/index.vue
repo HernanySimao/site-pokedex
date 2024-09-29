@@ -1,6 +1,6 @@
 <script setup>
-import { useGetNumber } from "../../composables/useGetNumber";
-import { useGetTypeColor } from "../../composables/useGetTypeColor";
+import { useGetNumber } from "../../../composables/useGetNumber";
+import { useGetTypeColor } from "../../../composables/useGetTypeColor";
 
 const props = defineProps({
   data: {

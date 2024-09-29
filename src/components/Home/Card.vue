@@ -1,11 +1,14 @@
 <script setup>
 import { useGetNumber } from "../../composables/useGetNumber";
 import { useIdStore } from "../../stores/useIdStore";
+import { useModalStore } from "../../stores/modalStore";
 
+const modalStore = useModalStore();
 const idStore = useIdStore();
 
 const sendId = (id) => {
   idStore.setId(id);
+  modalStore.openModal();
 };
 
 const image = import.meta.env.VITE_URL_ASSET;
@@ -26,10 +29,10 @@ defineProps({
         <div
           v-for="(item, i) in data"
           :key="i"
-          class="col-md-4 mb-5 mt-5 d-flex align-items-center"
+          class="col-md-4 mb-5 mt-3 pt-4 mt-md-5 d-flex align-items-center"
         >
           <div
-            @click="sendId(useGetNumber(item?.url))"
+            @click="sendId(useGetNumber(item?.url)), modalStore.openModal"
             class="card w-100 cursor-pointer d-flex flex-column align-items-center position-relative"
           >
             <div

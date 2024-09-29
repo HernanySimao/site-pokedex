@@ -26,7 +26,6 @@ const fetchPokemons = async (url = "pokemon/?limit=6&offset=0") => {
     console.error("Erro ao buscar lista de Pokémon:", error);
   }
 };
-
 const types = ref([]);
 const selectedType = ref("");
 
@@ -49,7 +48,7 @@ const fetchPokemonsByType = async () => {
         const response = await useCustomFetch(
           `type/${useGetNumber(selectedTypeObj.url)}`
         );
-        pokemons.value = response.pokemon.slice(0, 10).map((p) => ({
+        pokemons.value = response.pokemon.slice(0, 6).map((p) => ({
           name: p.pokemon.name,
           url: p.pokemon.url,
         }));
@@ -106,14 +105,15 @@ const filteredData = computed(() => {
             />
           </div>
 
-          <div class="row mt-4">
+          <div class="row mt-4 mb-5">
+            <span class="ms-3">Selecione o tipo de filtro:</span>
             <div
               v-for="type in [
                 { id: 1, name: 'Nome' },
                 { id: 2, name: 'Número' },
               ]"
               :key="type.id"
-              class="col-md-3 mt-4 ms-3 cursor-pointer"
+              class="col-md-3 mt-2 mt-md-4 ms-3 cursor-pointer"
             >
               <div
                 @click="searchType = type.id"
@@ -126,7 +126,7 @@ const filteredData = computed(() => {
               </div>
             </div>
 
-            <div class="col-md-3 mt-4 ms-3">
+            <div class="col-md-3 mt-2 mt-md-4 ms-3">
               <select
                 v-model="selectedType"
                 @change="fetchPokemonsByType"
@@ -153,7 +153,10 @@ const filteredData = computed(() => {
             <span>Não encontramos nada, tente novamente</span>
           </div>
 
-          <div class="d-flex justify-content-between mt-4">
+          <div
+            v-if="filteredData.length"
+            class="d-flex justify-content-between mt-4"
+          >
             <button
               @click="fetchPokemons(previousPage)"
               :disabled="!previousPage"

@@ -1,6 +1,7 @@
 <script setup>
 import HomeLayout from "./components/Home/Layout.vue";
-import HomeDetails from "./components/Home/Details.vue";
+import HomeDetails from "./components/Home/Details/index.vue";
+import HomeDetailsMobile from "./components/Home/Details/Mobile.vue";
 
 import { useIdStore } from "./stores/useIdStore";
 import { useCustomFetch } from "./composables/useCustomFetch";
@@ -46,6 +47,13 @@ watch(
   <div>
     <HomeLayout>
       <HomeDetails
+        class="d-none d-md-inline"
+        :data="pokemon"
+        :id="idStore?.selectedId"
+        :evaluation="evaluation"
+      />
+      <HomeDetailsMobile
+        class="d-inline-block d-md-none"
         :data="pokemon"
         :id="idStore?.selectedId"
         :evaluation="evaluation"
