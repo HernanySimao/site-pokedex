@@ -29,7 +29,7 @@ defineProps({
         <div
           v-for="(item, i) in data"
           :key="i"
-          class="col-md-4 mb-5 pt-4 mt-md-5 d-flex align-items-center"
+          class="col-md-4 mb-5 pt-4 pt-md-0 mt-md-5 d-flex align-items-center"
         >
           <div
             @click="sendId(useGetNumber(item?.url)), modalStore.openModal"

@@ -5,12 +5,12 @@ import Home from '../views/Home.vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Inicio',
     component: Home,
   },
   {
     path: '/favoritos',
-    name: 'Favorite',
+    name: 'Favorito',
     component: Favorite,
   },
 ];
@@ -20,4 +20,5 @@ const router = createRouter({
   routes,
 });
 
+export { routes };
 export default router;
