@@ -1,6 +1,8 @@
 <script setup>
-import { useGetNumber } from "../../composables/useGetNumber";
-import { useGetTypeColor } from "../../composables/useGetTypeColor";
+import AOS from "aos";
+import { onMounted } from "vue";
+import { useGetNumber } from "../../../composables/useGetNumber";
+import { useGetTypeColor } from "../../../composables/useGetTypeColor";
 
 const props = defineProps({
   data: {
@@ -35,6 +37,10 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
 
   return evolutions;
 };
+
+onMounted(() => {
+  AOS.refresh();
+});
 </script>
 
 <template>
@@ -43,13 +49,14 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
       <div class="row">
         <div class="card">
           <div v-if="data" class="card-body text-center">
-            <div class="mb-4">
+            <div class="mb-4" data-aos="fade-left">
               <img class="pokemon" :src="image + id + '.svg'" :alt="id" />
             </div>
             <span>#{{ id }} </span>
 
             <h1>Estatísticas</h1>
             <div
+              data-aos="fade-right"
               class="d-flex justify-content-center flex-wrap text-center mb-5"
             >
               <div
@@ -66,6 +73,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
             <h1>Tipos</h1>
             <div class="d-flex justify-content-center flex-wrap mb-5">
               <div
+                data-aos="fade-left"
                 class="types text-white col-md-3"
                 v-for="(type, i) in data?.types"
                 :key="i"
@@ -80,6 +88,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
             <h1 class="mb-4">Evoluções</h1>
             <div class="d-flex justify-content-center flex-wrap">
               <div
+                data-aos="fade-up"
                 class="col-md-3 align-items-center"
                 v-for="(evolution, i) in getEvolutions(evaluation?.chain)"
                 :key="i"

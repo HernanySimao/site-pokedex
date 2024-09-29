@@ -1,56 +1,14 @@
 <script setup>
-import HomeLayout from "./components/Home/Layout.vue";
-import HomeDetails from "./components/Home/Details.vue";
-
-import { useIdStore } from "./stores/useIdStore";
-import { useCustomFetch } from "./composables/useCustomFetch";
-import { useGetNumber } from "./composables/useGetNumber";
-import { onMounted, ref, watch } from "vue";
-
-const idStore = useIdStore();
-const pokemonData = ref([]);
-const pokemon = ref(null);
-const pokemonEvaluation = ref(null);
-const evaluation = ref(null);
-
-const get = async () => {
-  try {
-    const data = await useCustomFetch(`pokemon/${idStore?.selectedId}`);
-    pokemon.value = data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-const getEvaluation = async () => {
-  try {
-    const data = await useCustomFetch(`pokemon-species/${idStore?.selectedId}`);
-    pokemonEvaluation.value = data?.evolution_chain.url;
-    evaluation.value = await useCustomFetch(
-      `evolution-chain/${useGetNumber(pokemonEvaluation.value)}`
-    );
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-watch(
-  () => idStore?.selectedId,
-  () => {
-    get();
-    getEvaluation();
-  }
-);
+import Menu from "./components/Menu.vue";
 </script>
 
 <template>
   <div>
-    <HomeLayout>
-      <HomeDetails
-        :data="pokemon"
-        :id="idStore?.selectedId"
-        :evaluation="evaluation"
-      />
-    </HomeLayout>
+    <div id="app">
+      <Menu>
+        <router-view></router-view>
+      </Menu>
+    </div>
   </div>
 </template>
 

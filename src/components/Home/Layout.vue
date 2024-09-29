@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import HomeCard from "./Card.vue";
+import AOS from "aos";
+import Card from "../Card.vue";
 import { useGetNumber } from "../../composables/useGetNumber";
 import { useCustomFetch } from "../../composables/useCustomFetch";
 
@@ -26,7 +27,6 @@ const fetchPokemons = async (url = "pokemon/?limit=6&offset=0") => {
     console.error("Erro ao buscar lista de Pokémon:", error);
   }
 };
-
 const types = ref([]);
 const selectedType = ref("");
 
@@ -49,7 +49,7 @@ const fetchPokemonsByType = async () => {
         const response = await useCustomFetch(
           `type/${useGetNumber(selectedTypeObj.url)}`
         );
-        pokemons.value = response.pokemon.slice(0, 10).map((p) => ({
+        pokemons.value = response.pokemon.slice(0, 6).map((p) => ({
           name: p.pokemon.name,
           url: p.pokemon.url,
         }));
@@ -65,6 +65,7 @@ const fetchPokemonsByType = async () => {
 onMounted(() => {
   fetchTypes();
   fetchPokemons();
+  AOS.refresh();
 });
 
 const searchType = ref(1);
@@ -89,7 +90,7 @@ const filteredData = computed(() => {
   <section>
     <div class="container mt-5">
       <div class="row">
-        <div class="col-md-7 mb-5">
+        <div class="col-md-7 mb-5 col-12">
           <div class="position-relative">
             <input
               v-model="searchQuery"
@@ -106,14 +107,15 @@ const filteredData = computed(() => {
             />
           </div>
 
-          <div class="row mt-4">
+          <div class="row mt-4 mb-5">
+            <span>Selecione o tipo de filtro:</span>
             <div
               v-for="type in [
                 { id: 1, name: 'Nome' },
                 { id: 2, name: 'Número' },
               ]"
               :key="type.id"
-              class="col-md-3 mt-4 ms-3 cursor-pointer"
+              class="col-md-3 mt-2 mt-md-4 cursor-pointer"
             >
               <div
                 @click="searchType = type.id"
@@ -126,7 +128,7 @@ const filteredData = computed(() => {
               </div>
             </div>
 
-            <div class="col-md-3 mt-4 ms-3">
+            <div class="col-md-3 mt-2 mt-md-4">
               <select
                 v-model="selectedType"
                 @change="fetchPokemonsByType"
@@ -144,16 +146,21 @@ const filteredData = computed(() => {
             </div>
           </div>
 
-          <HomeCard
+          <Card
+            data-aos="fade-up"
             v-if="filteredData.length"
             :data="filteredData"
-            class="mt-5"
+            class="mt-5 pt-5"
           />
           <div class="text-center mt-5 mb-5 p-5" v-else>
             <span>Não encontramos nada, tente novamente</span>
           </div>
 
-          <div class="d-flex justify-content-between mt-4">
+          <div
+            data-aos="fade-up"
+            v-if="filteredData.length"
+            class="d-flex justify-content-between mt-4"
+          >
             <button
               @click="fetchPokemons(previousPage)"
               :disabled="!previousPage"
@@ -171,7 +178,7 @@ const filteredData = computed(() => {
           </div>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-5" data-aos="fade-left">
           <main>
             <slot></slot>
           </main>
@@ -195,7 +202,6 @@ const filteredData = computed(() => {
   padding: 12px
   border-radius: 10px
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px
-  padding-right: 80px
   &:focus-visible
     border-color: #F0C900 !important
 
