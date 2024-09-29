@@ -88,7 +88,7 @@ const filteredData = computed(() => {
   <section>
     <div class="container mt-5">
       <div class="row">
-        <div class="col-md-7 mb-5">
+        <div class="col-md-7 mb-5 col-12">
           <div class="position-relative">
             <input
               v-model="searchQuery"
@@ -106,14 +106,14 @@ const filteredData = computed(() => {
           </div>
 
           <div class="row mt-4 mb-5">
-            <span class="ms-3">Selecione o tipo de filtro:</span>
+            <span>Selecione o tipo de filtro:</span>
             <div
               v-for="type in [
                 { id: 1, name: 'Nome' },
                 { id: 2, name: 'Número' },
               ]"
               :key="type.id"
-              class="col-md-3 mt-2 mt-md-4 ms-3 cursor-pointer"
+              class="col-md-3 mt-2 mt-md-4 cursor-pointer"
             >
               <div
                 @click="searchType = type.id"
@@ -126,7 +126,7 @@ const filteredData = computed(() => {
               </div>
             </div>
 
-            <div class="col-md-3 mt-2 mt-md-4 ms-3">
+            <div class="col-md-3 mt-2 mt-md-4">
               <select
                 v-model="selectedType"
                 @change="fetchPokemonsByType"
@@ -147,7 +147,7 @@ const filteredData = computed(() => {
           <HomeCard
             v-if="filteredData.length"
             :data="filteredData"
-            class="mt-5"
+            class="mt-5 pt-5"
           />
           <div class="text-center mt-5 mb-5 p-5" v-else>
             <span>Não encontramos nada, tente novamente</span>
@@ -198,7 +198,6 @@ const filteredData = computed(() => {
   padding: 12px
   border-radius: 10px
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px
-  padding-right: 80px
   &:focus-visible
     border-color: #F0C900 !important
 
