@@ -1,7 +1,8 @@
 <script setup>
-import { reactive, ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import HomeCard from "./Card.vue";
-import { useGetNumber } from "../../composables/useGetNumber"; // Ajuste o caminho conforme necessário
+import { useGetNumber } from "../../composables/useGetNumber";
+import { useCustomFetch } from "../../composables/useCustomFetch";
 
 const { data } = defineProps({
   data: {
@@ -11,37 +12,73 @@ const { data } = defineProps({
   },
 });
 
-const filterTypes = reactive([
-  {
-    id: 1,
-    name: "Nome",
-    image: "/image/game-control.png",
-  },
-  {
-    id: 2,
-    name: "Número",
-    image: "/image/gamex.png",
-  },
-  {
-    id: 3,
-    name: "Tipo",
-    image: "/image/eggs.png",
-  },
-]);
+const fetchInitialPokemons = async () => {
+  try {
+    const response = await useCustomFetch("pokemon?limit=10");
+    pokemons.value = response.results.map((p) => ({
+      name: p.name,
+      url: p.url,
+    }));
+  } catch (error) {
+    console.error("Erro ao buscar lista inicial de Pokémon:", error);
+  }
+};
 
-const selected = ref(1);
-const search = ref("");
+const types = ref([]);
+const selectedType = ref("");
+const pokemons = ref([]);
+
+const fetchTypes = async () => {
+  try {
+    const response = await useCustomFetch("type/");
+    types.value = response.results;
+  } catch (error) {
+    console.error("Erro ao buscar tipos:", error);
+  }
+};
+
+const fetchPokemonsByType = async () => {
+  if (selectedType.value) {
+    const selectedTypeObj = types.value.find(
+      (type) => type.name === selectedType.value
+    );
+    if (selectedTypeObj) {
+      try {
+        const response = await useCustomFetch(
+          `type/${useGetNumber(selectedTypeObj.url)}`
+        );
+        pokemons.value = response.pokemon.slice(0, 10).map((p) => ({
+          name: p.pokemon.name,
+          url: p.pokemon.url,
+        }));
+      } catch (error) {
+        console.error("Erro ao buscar Pokémon por tipo:", error);
+      }
+    }
+  } else {
+    fetchInitialPokemons();
+  }
+};
+
+onMounted(() => {
+  fetchTypes();
+  fetchInitialPokemons();
+});
+
+const searchType = ref(1);
+const searchQuery = ref("");
 
 const filteredData = computed(() => {
-  return data.filter((item) => {
+  return pokemons.value.filter((item) => {
     const number = useGetNumber(item.url);
 
-    if (selected.value === 1) {
-      return item.name.toLowerCase().includes(search.value.toLowerCase());
-    } else if (selected.value === 2) {
-      return number && number.includes(search.value);
+    if (searchType.value === 1) {
+      return item.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    } else if (searchType.value === 2) {
+      return number && number.includes(searchQuery.value);
     }
-    return false;
+
+    return true;
   });
 });
 </script>
@@ -51,46 +88,57 @@ const filteredData = computed(() => {
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-7 mb-5">
-          <div>
-            <div class="position-relative">
-              <input
-                v-model="search"
-                type="text"
-                :placeholder="`Pesquisar por ${
-                  selected == 1 ? 'Nome' : 'Número'
-                }`"
-                class="form-control"
-              />
-              <img
-                class="position-absolute icon"
-                src="/image/browser.png"
-                alt="Ícone de pesquisa"
-              />
-            </div>
+          <div class="position-relative">
+            <input
+              v-model="searchQuery"
+              type="text"
+              :placeholder="`Pesquisar por ${
+                searchType == 1 ? 'Nome' : 'Número'
+              }`"
+              class="form-control"
+            />
+            <img
+              class="position-absolute icon"
+              src="/image/browser.png"
+              alt="Ícone de pesquisa"
+            />
           </div>
 
-          <div class="row">
+          <div class="row mt-4">
             <div
-              v-for="(type, i) in filterTypes"
-              :key="i"
+              v-for="type in [
+                { id: 1, name: 'Nome' },
+                { id: 2, name: 'Número' },
+              ]"
+              :key="type.id"
               class="col-md-3 mt-4 ms-3 cursor-pointer"
             >
               <div
-                @click="selected = type.id"
+                @click="searchType = type.id"
                 class="card text-center"
-                :class="{ active: selected == type.id }"
+                :class="{ active: searchType == type.id }"
               >
                 <div class="card-body">
-                  <div>
-                    <img
-                      class="icon-filter"
-                      :src="type?.image"
-                      alt="Ícone de filtro"
-                    />
-                    <span class="ms-3"> {{ type.name }} </span>
-                  </div>
+                  <span>{{ type.name }}</span>
                 </div>
               </div>
+            </div>
+
+            <div class="col-md-3 mt-4 ms-3">
+              <select
+                v-model="selectedType"
+                @change="fetchPokemonsByType"
+                class="form-select text-capitalize"
+              >
+                <option selected disabled value="">Selecionar Tipo</option>
+                <option
+                  v-for="type in types"
+                  :key="type.name"
+                  :value="type.name"
+                >
+                  {{ type.name }}
+                </option>
+              </select>
             </div>
           </div>
 
@@ -98,11 +146,12 @@ const filteredData = computed(() => {
             v-if="filteredData.length"
             :data="filteredData"
             class="mt-5"
-          ></HomeCard>
+          />
           <div class="text-center mt-5 mb-5 p-5" v-else>
             <span>Não encontramos nada, tente novamente</span>
           </div>
         </div>
+
         <div class="col-md-5">
           <main>
             <slot></slot>
@@ -122,13 +171,18 @@ const filteredData = computed(() => {
   &:focus-visible
     border-color: #F0C900 !important
 
+.form-select
+  padding: 12px
+  border-radius: 10px
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px
+  padding-right: 80px
+  &:focus-visible
+    border-color: #F0C900 !important
+
 .icon
   width: 40px
   top: 12px
   right: 20px
-
-.icon-filter
-  width: 25px
 
 .card
   .card-body
