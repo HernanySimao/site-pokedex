@@ -53,6 +53,12 @@ const cancelClear = () => {
 };
 </script>
 
+<script>
+export default {
+  name: "Favorite",
+};
+</script>
+
 <template>
   <section>
     <div class="container mt-5">

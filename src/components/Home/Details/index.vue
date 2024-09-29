@@ -43,6 +43,12 @@ onMounted(() => {
 });
 </script>
 
+<script>
+export default {
+  name: "HomeDetails",
+};
+</script>
+
 <template>
   <section>
     <div class="container" data-aos="fade-left">

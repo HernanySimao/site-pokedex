@@ -42,6 +42,11 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
 };
 </script>
 
+<script>
+export default {
+  name: "HomeDetailsMobile",
+};
+</script>
 <template>
   <section>
     <div

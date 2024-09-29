@@ -1,24 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 import { useGetNumber } from "../composables/useGetNumber";
 import { useIdStore } from "../stores/useIdStore";
 import { useModalStore } from "../stores/modalStore";
+import { PokemonItem, SavedItem } from "../interfaces/ICard";
 
+// Stores
 const modalStore = useModalStore();
 const idStore = useIdStore();
 
-const savedItems = ref(JSON.parse(localStorage.getItem("savedItems")) || []);
+const savedItems = ref<SavedItem[]>(
+  JSON.parse(localStorage.getItem("savedItems") || "[]")
+);
 
-const isItemSaved = (url) => {
+const isItemSaved = (url: string): boolean => {
   return savedItems.value.some((savedItem) => savedItem.url === url);
 };
-
-const sendId = (item) => {
+const sendId = (item: PokemonItem): void => {
   modalStore.openModal();
   idStore.setId(useGetNumber(item?.url));
 };
 
-const saveToLocalStorage = (item) => {
+const saveToLocalStorage = (item: PokemonItem): void => {
   const existingItem = savedItems.value.find(
     (savedItem) => savedItem.url === item.url
   );
@@ -47,6 +50,7 @@ defineProps({
   },
 });
 </script>
+
 
 <template>
   <section>
