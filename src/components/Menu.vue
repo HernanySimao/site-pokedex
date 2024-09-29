@@ -13,7 +13,7 @@ const routeList = routes;
       <div class="row">
         <nav class="navbar navbar-expand-lg bg-white border rounded-3">
           <div class="container-fluid">
-            <a class="navbar-brand logo" href="#">Pokémon</a>
+            <router-link to="/" class="navbar-brand logo">Pokémon</router-link>
             <button
               class="navbar-toggler"
               type="button"

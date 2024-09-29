@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import HomeCard from "./Card.vue";
+import Card from "../Card.vue";
 import { useGetNumber } from "../../composables/useGetNumber";
 import { useCustomFetch } from "../../composables/useCustomFetch";
 
@@ -144,7 +144,7 @@ const filteredData = computed(() => {
             </div>
           </div>
 
-          <HomeCard
+          <Card
             v-if="filteredData.length"
             :data="filteredData"
             class="mt-5 pt-5"
