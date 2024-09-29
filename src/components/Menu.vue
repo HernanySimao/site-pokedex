@@ -11,7 +11,9 @@ const routeList = routes;
   <section>
     <div class="container mt-3">
       <div class="row">
-        <nav class="navbar navbar-expand-lg bg-white border rounded-3">
+        <nav
+          class="navbar navbar-expand-lg bg-white border rounded-3 p-md-3 p-4"
+        >
           <div class="container-fluid">
             <router-link to="/" class="navbar-brand logo">Pokémon</router-link>
             <button

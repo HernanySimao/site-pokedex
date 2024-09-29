@@ -46,14 +46,14 @@ watch(
 <template>
   <div>
     <HomeLayout>
-      <HomeDetails
-        class="d-none d-md-inline"
+      <HomeDetailsMobile
+        class="d-inline-block d-md-none"
         :data="pokemon"
         :id="idStore?.selectedId"
         :evaluation="evaluation"
       />
-      <HomeDetailsMobile
-        class="d-inline-block d-md-none"
+      <HomeDetails
+        class="d-none d-md-inline"
         :data="pokemon"
         :id="idStore?.selectedId"
         :evaluation="evaluation"

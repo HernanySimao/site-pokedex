@@ -80,7 +80,7 @@ const cancelClear = () => {
         </div>
       </div>
 
-      <div data-aos="fade-up" v-if="favorites.length">
+      <div data-aos="fade-up" class="mt-5 mt-md-4" v-if="favorites.length">
         <Card :data="favorites"></Card>
       </div>
       <div class="mt-5 p-5 text-center" v-else>

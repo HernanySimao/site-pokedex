@@ -151,50 +151,50 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
 
 <style lang="sass" scoped>
 .pokemon
-    width: 150px
-    height: 100%
+  width: 150px
+  height: 100%
 
 .evolution
-    width: 100px
-    height: 100px
-    object-fit: contain
+  width: 100px
+  height: 100px
+  object-fit: contain
 
 .stats
-    background: #f5f5f5
-    border-radius: 18px
-    margin: 5px
-    padding: 10px 2px
-    font-size: 13px
-    &:hover
-        background-color: #F0C900
-        color: #fff
+  background: #f5f5f5
+  border-radius: 18px
+  margin: 5px
+  padding: 10px 2px
+  font-size: 13px
+  &:hover
+    background-color: #F0C900
+    color: #fff
 .types
-    border-radius: 18px
-    margin: 2px
-    padding: 13px 2px
-    font-size: 13px
+  border-radius: 18px
+  margin: 2px
+  padding: 13px 2px
+  font-size: 13px
 
 /* Estilos básicos do modal */
 .modal
-    background: rgba(0, 0, 0, 0.5)
-    position: fixed
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    display: flex
-    align-items: center
-    justify-content: center
+  background: rgba(0, 0, 0, 0.5)
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  display: flex
+  align-items: center
+  justify-content: center
 
-    &-content
-        background: #fff
-        border-radius: 8px
-        padding: 20px
-        max-width: 800px
-        width: 100%
+  &-content
+    background: #fff
+    border-radius: 8px
+    padding: 20px
+    max-width: 800px
+    width: 100%
 
     &-header, &-footer
-        display: flex
-        justify-content: space-between
-        align-items: center
+      display: flex
+      justify-content: space-between
+      align-items: center
 </style>

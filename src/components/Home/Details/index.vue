@@ -45,7 +45,7 @@ onMounted(() => {
 
 <template>
   <section>
-    <div class="container">
+    <div class="container" data-aos="fade-left">
       <div class="row">
         <div class="card">
           <div v-if="data" class="card-body text-center">
@@ -88,7 +88,7 @@ onMounted(() => {
             <h1 class="mb-4">Evoluções</h1>
             <div class="d-flex justify-content-center flex-wrap">
               <div
-                data-aos="fade-up"
+                data-aos="fade-left"
                 class="col-md-3 align-items-center"
                 v-for="(evolution, i) in getEvolutions(evaluation?.chain)"
                 :key="i"

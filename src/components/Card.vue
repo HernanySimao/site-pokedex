@@ -14,8 +14,8 @@ const isItemSaved = (url) => {
 };
 
 const sendId = (item) => {
+  modalStore.openModal();
   idStore.setId(useGetNumber(item?.url));
-  modalStore.openModal(); // Abre o modal
 };
 
 const saveToLocalStorage = (item) => {
@@ -30,13 +30,10 @@ const saveToLocalStorage = (item) => {
       url: item.url,
     });
   } else {
-    // Se já estiver salvo, remove do localStorage
     savedItems.value = savedItems.value.filter(
       (savedItem) => savedItem.url !== item.url
     );
   }
-
-  // Atualiza o localStorage
   localStorage.setItem("savedItems", JSON.stringify(savedItems.value));
 };
 
@@ -61,7 +58,7 @@ defineProps({
           class="col-md-4 mb-5 pt-4 pt-md-0 mt-md-5 d-flex align-items-center"
         >
           <div
-            @click="sendId({ name: item.name, url: item.url })"
+            @click="sendId({ url: item.url })"
             class="card w-100 cursor-pointer d-flex flex-column align-items-center position-relative"
           >
             <div
