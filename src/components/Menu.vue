@@ -1,10 +1,23 @@
 <script setup>
+import { ref, onMounted } from "vue";
 import { routes } from "../router";
 import { useRoute } from "vue-router";
+import Cookies from "js-cookie";
 
 const url = useRoute();
-
 const routeList = routes;
+
+const currentTheme = ref(Cookies.get("theme") || "light");
+
+onMounted(() => {
+  document.documentElement.setAttribute("data-theme", currentTheme.value);
+});
+
+const toggleTheme = () => {
+  currentTheme.value = currentTheme.value === "light" ? "dark" : "light";
+  Cookies.set("theme", currentTheme.value, { expires: 7 });
+  document.documentElement.setAttribute("data-theme", currentTheme.value);
+};
 </script>
 
 <template>
@@ -16,6 +29,14 @@ const routeList = routes;
         >
           <div class="container-fluid">
             <router-link to="/" class="navbar-brand logo">Pokémon</router-link>
+            <button
+              class="btn btn-link theme d-inline-block d-md-none"
+              @click="toggleTheme"
+              aria-label="Toggle Theme"
+            >
+              <span v-if="currentTheme === 'light'" aria-hidden="true">🌙</span>
+              <span v-else aria-hidden="true">☀️</span>
+            </button>
             <button
               class="navbar-toggler"
               type="button"
@@ -42,6 +63,16 @@ const routeList = routes;
                   >
                 </li>
               </ul>
+              <button
+                class="btn btn-link theme d-none d-md-inline"
+                @click="toggleTheme"
+                aria-label="Toggle Theme"
+              >
+                <span v-if="currentTheme === 'light'" aria-hidden="true"
+                  >🌙</span
+                >
+                <span v-else aria-hidden="true">☀️</span>
+              </button>
             </div>
           </div>
         </nav>
@@ -57,6 +88,10 @@ const routeList = routes;
 <style lang="sass" scoped>
 .navbar
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+
+.theme
+  text-decoration: none
+  font-size: 30px
 
 .active
   border-bottom: 2px solid #F0C900

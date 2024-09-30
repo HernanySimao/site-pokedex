@@ -3,14 +3,6 @@ import { ref, onMounted } from "vue";
 import Card from "../Card.vue";
 import AOS from "aos";
 
-defineProps({
-  data: {
-    type: Array,
-    required: true,
-    default: () => [],
-  },
-});
-
 const favorites = ref([]);
 
 const showConfirmation = ref(false);
@@ -67,7 +59,7 @@ export default {
         <p v-if="favorites.length && !showConfirmation">
           Deseja limpar a sua lista?
           <span
-            class="primary-text-color cursor-pointer"
+            class="primary-text-color dark-color cursor-pointer"
             @click="clearSavedItems"
           >
             Clica aqui
@@ -79,7 +71,9 @@ export default {
             Em
             <strong class="primary-text-color">{{ countdown }}s</strong>
             limparemos tudo, você pode cancelar
-            <span class="primary-text-color cursor-pointer" @click="cancelClear"
+            <span
+              class="primary-text-color dark-color cursor-pointer"
+              @click="cancelClear"
               >aqui</span
             >.
           </p>
