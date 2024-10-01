@@ -11,8 +11,10 @@ const { locale } = useI18n();
 const pokemons = ref([]);
 const nextPage = ref(null);
 const previousPage = ref(null);
-
-const fetchPokemons = async (url = "pokemon/?limit=6&offset=0") => {
+const lang = localStorage.getItem("language") || "pt";
+const fetchPokemons = async (
+  url = `pokemon/?limit=6&offset=0&language=${lang}`
+) => {
   try {
     const response = await useCustomFetch(url);
     pokemons.value = response.results.map((p) => ({
@@ -35,7 +37,7 @@ const selectedType = ref("");
 
 const fetchTypes = async () => {
   try {
-    const response = await useCustomFetch("type/");
+    const response = await useCustomFetch(`type/?language=${lang}`);
     types.value = response.results;
   } catch (error) {
     console.error("Erro ao buscar tipos:", error);

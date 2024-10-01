@@ -15,11 +15,11 @@ const pokemonData = ref<Pokemon[]>([]);
 const pokemon = ref<Pokemon | null>(null);
 const pokemonEvaluation = ref<string | null>(null);
 const evaluation = ref<EvolutionChain | null>(null);
-
+const lang = localStorage.getItem("language") || "pt";
 const get = async (): Promise<void> => {
   try {
     const data = await useCustomFetch<Pokemon>(
-      `pokemon/${idStore?.selectedId}`
+      `pokemon/${idStore?.selectedId}?language=${lang}`
     );
     pokemon.value = data;
   } catch (error) {
@@ -30,13 +30,15 @@ const get = async (): Promise<void> => {
 const getEvaluation = async (): Promise<void> => {
   try {
     const data = await useCustomFetch<{ evolution_chain: { url: string } }>(
-      `pokemon-species/${idStore?.selectedId}`
+      `pokemon-species/${idStore?.selectedId}?language=${lang}`
     );
     pokemonEvaluation.value = data?.evolution_chain.url;
 
     if (pokemonEvaluation.value) {
       evaluation.value = await useCustomFetch<EvolutionChain>(
-        `evolution-chain/${useGetNumber(pokemonEvaluation.value)}`
+        `evolution-chain/${useGetNumber(
+          pokemonEvaluation.value
+        )}?language=${lang}`
       );
     }
   } catch (error) {
