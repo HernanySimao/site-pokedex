@@ -4,6 +4,15 @@ import { routes } from "../router";
 import { useRoute } from "vue-router";
 import Cookies from "js-cookie";
 
+import { useI18n } from "vue-i18n";
+
+const { locale } = useI18n();
+
+const changeLanguage = (lang) => {
+  locale.value = lang;
+  localStorage.setItem("language", lang);
+};
+
 const url = useRoute();
 const routeList = routes;
 
@@ -73,6 +82,12 @@ const toggleTheme = () => {
                 >
                 <span v-else aria-hidden="true">☀️</span>
               </button>
+              <div>
+                <p>{{ $t("hello") }}</p>
+                <p>{{ $t("welcome") }}</p>
+                <button @click="changeLanguage('en')">English</button>
+                <button @click="changeLanguage('pt')">Português</button>
+              </div>
             </div>
           </div>
         </nav>
