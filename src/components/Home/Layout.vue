@@ -5,6 +5,9 @@ import Card from "../Card.vue";
 import { useGetNumber } from "../../composables/useGetNumber";
 import { useCustomFetch } from "../../composables/useCustomFetch";
 
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n();
+
 const pokemons = ref([]);
 const nextPage = ref(null);
 const previousPage = ref(null);
@@ -95,8 +98,10 @@ const filteredData = computed(() => {
             <input
               v-model="searchQuery"
               type="text"
-              :placeholder="`Pesquisar por ${
-                searchType == 1 ? 'Nome' : 'Número'
+              :placeholder="` ${$t('home.filter.placeholder')} ${
+                searchType == 1
+                  ? $t('home.filter.name')
+                  : $t('home.filter.number')
               }`"
               class="form-control"
             />
@@ -108,11 +113,11 @@ const filteredData = computed(() => {
           </div>
 
           <div class="row mt-4 mb-5">
-            <span>Selecione o tipo de filtro:</span>
+            <span> {{ $t("home.filter.label") }} </span>
             <div
               v-for="type in [
-                { id: 1, name: 'Nome' },
-                { id: 2, name: 'Número' },
+                { id: 1, name: $t('home.filter.name') },
+                { id: 2, name: $t('home.filter.number') },
               ]"
               :key="type.id"
               class="col-md-3 mt-2 mt-md-4 cursor-pointer"
@@ -134,7 +139,9 @@ const filteredData = computed(() => {
                 @change="fetchPokemonsByType"
                 class="form-select text-capitalize"
               >
-                <option selected disabled value="">Selecionar Tipo</option>
+                <option selected disabled value="">
+                  {{ $t("home.filter.type") }}
+                </option>
                 <option
                   v-for="type in types.slice(0, -1)"
                   :key="type.name"
@@ -153,7 +160,7 @@ const filteredData = computed(() => {
             class="mt-5 pt-5"
           />
           <div class="text-center mt-5 mb-5 p-5" v-else>
-            <span>Não encontramos nada, tente novamente</span>
+            <span> {{ $t("home.alert") }} </span>
           </div>
 
           <div
@@ -165,14 +172,14 @@ const filteredData = computed(() => {
               :disabled="!previousPage"
               class="btn button-primary"
             >
-              Anterior
+              {{ $t("home.buttons.previous") }}
             </button>
             <button
               @click="fetchPokemons(nextPage)"
               :disabled="!nextPage"
               class="btn button-primary"
             >
-              Próximo
+              {{ $t("home.buttons.next") }}
             </button>
           </div>
         </div>

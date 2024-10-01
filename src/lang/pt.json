@@ -2,6 +2,7 @@
 
   "home": {
     "filter": {
+      "label": "Selecione o tipo de filtro:",
       "placeholder": "Pesquisar por",
       "name": "Nome",
       "number": "Número",
@@ -9,6 +10,7 @@
     },
 
     "details": {
+      "label":"Detalhes do Pokémon",
       "selected": "Selecione um Pokemon",
       "statistics":"Estatísticas",
       "types": "Tipos",
@@ -17,7 +19,8 @@
 
     "buttons":{
       "previous":"Anterior",
-      "next": "Próximo"
+      "next": "Próximo",
+      "close":" Fechar"
     },
 
     "alert":"Não encontramos nada, tente novamente"

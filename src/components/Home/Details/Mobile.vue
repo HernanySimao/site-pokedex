@@ -3,7 +3,8 @@ import { ref } from "vue";
 import { useGetNumber } from "../../../composables/useGetNumber";
 import { useGetTypeColor } from "../../../composables/useGetTypeColor";
 import { useModalStore } from "../../../stores/modalStore";
-
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n();
 const modalStore = useModalStore();
 
 const props = defineProps({
@@ -57,7 +58,7 @@ export default {
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Detalhes do Pokémon</h5>
+            <h5 class="modal-title">{{ $t("home.details.label") }}</h5>
             <button
               type="button"
               class="btn-close"
@@ -78,7 +79,7 @@ export default {
                     </div>
                     <span>#{{ id }} </span>
 
-                    <h1>Estatísticas</h1>
+                    <h1>{{ $t("home.details.statistics") }}</h1>
                     <div
                       class="d-flex justify-content-center flex-wrap text-center mb-5"
                     >
@@ -93,7 +94,7 @@ export default {
                       </div>
                     </div>
 
-                    <h1>Tipos</h1>
+                    <h1>{{ $t("home.details.types") }}</h1>
                     <div class="d-flex justify-content-center flex-wrap mb-5">
                       <div
                         class="types text-white col-12"
@@ -109,7 +110,7 @@ export default {
                       </div>
                     </div>
 
-                    <h1 class="mb-4">Evoluções</h1>
+                    <h1 class="mb-4">{{ $t("home.details.evolutions") }}</h1>
                     <div class="d-flex justify-content-center flex-wrap">
                       <div
                         class="col-12 align-items-center mt-4"
@@ -133,7 +134,7 @@ export default {
                   </div>
 
                   <div class="text-center p-5 mt-5 mb-5" v-else>
-                    <span>Selecione um Pokemon</span>
+                    <span>{{ $t("home.details.selected") }}</span>
                   </div>
                 </div>
               </div>
@@ -145,7 +146,7 @@ export default {
               class="btn button-primary w-100"
               @click="modalStore.closeModal"
             >
-              Fechar
+              {{ $t("home.buttons.close") }}
             </button>
           </div>
         </div>
