@@ -1,5 +1,38 @@
 {
-    "hello": "Olá",
-    "welcome": "Bem-vindo ao site"
+
+  "home": {
+    "filter": {
+      "placeholder": "Pesquisar por",
+      "name": "Nome",
+      "number": "Número",
+      "type": "Selecionar Tipo"
+    },
+
+    "details": {
+      "selected": "Selecione um Pokemon",
+      "statistics":"Estatísticas",
+      "types": "Tipos",
+      "evolutions":"Evoluções"
+    },
+
+    "buttons":{
+      "previous":"Anterior",
+      "next": "Próximo"
+    },
+
+    "alert":"Não encontramos nada, tente novamente"
+
+  },
+
+  "favorite": {
+    "label": "Os seus Os seus pokemon favoritos",
+    "description": "Deseja limpar a sua lista?",
+    "click":"Clica aqui",
+    "in": "Em",
+    "alert":"limparemos tudo, você pode cancelar",
+    "here": "aqui",
+     "noItem": "Nenhum item na lista."
   }
+
   
+}
