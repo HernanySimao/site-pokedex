@@ -1,5 +1,10 @@
 {
 
+  "routes": {
+    "home":"Inicio",
+    "favorite":"Favorito"
+  },
+
   "home": {
     "filter": {
       "label": "Selecione o tipo de filtro:",

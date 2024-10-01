@@ -47,6 +47,16 @@ const toggleTheme = () => {
               <span v-else aria-hidden="true">☀️</span>
             </button>
             <button
+              class="btn d-inline-block d-md-none"
+              @click="changeLanguage(locale === 'en' ? 'pt' : 'en')"
+            >
+              <img
+                class="lang-image"
+                :src="`public/lang/${locale === 'en' ? 'pt' : 'en'}.png`"
+                :alt="locale"
+              />
+            </button>
+            <button
               class="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
@@ -68,7 +78,11 @@ const toggleTheme = () => {
                     :class="{ active: url.fullPath == route.path }"
                     class="nav-link ms-2 fw-bold"
                     :to="route.path"
-                    >{{ route.name }}</router-link
+                    >{{
+                      route.name === "Inicio"
+                        ? $t("routes.home")
+                        : $t("routes.favorite")
+                    }}</router-link
                   >
                 </li>
               </ul>
@@ -83,10 +97,16 @@ const toggleTheme = () => {
                 <span v-else aria-hidden="true">☀️</span>
               </button>
               <div>
-                <p>{{ $t("hello") }}</p>
-                <p>{{ $t("welcome") }}</p>
-                <button @click="changeLanguage('en')">English</button>
-                <button @click="changeLanguage('pt')">Português</button>
+                <button
+                  class="btn d-none d-md-inline"
+                  @click="changeLanguage(locale === 'en' ? 'pt' : 'en')"
+                >
+                  <img
+                    class="lang-image"
+                    :src="`public/lang/${locale === 'en' ? 'pt' : 'en'}.png`"
+                    :alt="locale"
+                  />
+                </button>
               </div>
             </div>
           </div>
@@ -101,6 +121,8 @@ const toggleTheme = () => {
 </template>
 
 <style lang="sass" scoped>
+.lang-image
+  width: 30px
 .navbar
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
 

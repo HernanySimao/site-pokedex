@@ -1,4 +1,8 @@
 {
+  "routes": {
+    "home":"Home",
+    "favorite":"Favorite"
+  },
   "home": {
     "filter": {
       "label": "Select the filter type:",
