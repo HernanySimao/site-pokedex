@@ -1,0 +1,24 @@
+h1, h3
+    font-family: $primary-theme-font
+    font-weight: 700
+span, button, h5, .nav-link,p
+    font-family: $primary-theme-font !important
+    font-weight: 500
+
+input, select
+    font-family: $primary-theme-font !important
+    font-weight: 500
+    &::placeholder
+        @extend  input
+
+.logo
+    font-family: 'Pokemon Solid', sans-serif !important
+    color: $primary-theme-color !important
+    letter-spacing: 3px
+
+// Fonts local
+@font-face
+    font-family: 'Pokemon Solid'
+    src: url('../assets/fonts/Pokemon Solid.ttf') format('truetype')
+    font-weight: normal
+    font-style: normal
