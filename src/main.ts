@@ -11,7 +11,7 @@ import pt from './lang/pt.json';
 const app = createApp(App);
 
 
-const savedLanguage = localStorage.getItem('language') || 'en';
+const savedLanguage = localStorage.getItem('language') || 'pt';
 const i18n = createI18n({
   locale: savedLanguage,
   fallbackLocale: 'pt',
