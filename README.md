@@ -70,8 +70,3 @@ No arquivo `.env`, adicione a URL base da PokeAPI:
 VITE_API_URL=https://pokeapi.co/api/v2/
 VITE_URL_ASSET=https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/
 ```
-
-## **Endpoints Utilizados**
-
-- **Pokémon**: `pokemon/?limit={limit}&offset={offset}&language={lang}`
-- **Tipos de Pokémon**: `type/?language={lang}`
