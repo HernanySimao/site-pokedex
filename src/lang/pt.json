@@ -34,7 +34,7 @@
   },
 
   "favorite": {
-    "label": "Os seus Os seus pokemon favoritos",
+    "label": "Os seus pokemon favoritos",
     "description": "Deseja limpar a sua lista?",
     "click":"Clica aqui",
     "in": "Em",
