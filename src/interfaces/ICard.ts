@@ -4,6 +4,6 @@ export interface PokemonItem {
   }
   
   export interface SavedItem extends PokemonItem {
-    id: string;  // Adicionamos o ID como string
+    id: string;   
   }
   

@@ -102,7 +102,7 @@ export default {
                 v-for="(evolution, i) in getEvolutions(evaluation?.chain)"
                 :key="i"
               >
-                <div class="cursor-pointer">
+                <div>
                   <img
                     class="evolution"
                     :src="image + useGetNumber(evolution?.url) + '.svg'"
@@ -124,6 +124,8 @@ export default {
 </template>
 
 <style lang="sass" scoped>
+@import "../../../assets/sass/variables"
+
 .pokemon
   width: 150px
   height: 100%
@@ -140,7 +142,7 @@ export default {
   padding: 10px 2px
   font-size: 13px
   &:hover
-    background-color: #F0C900
+    background-color: $primary-theme-color
     color: #fff
 .types
   border-radius: 18px
