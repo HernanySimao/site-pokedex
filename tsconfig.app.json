@@ -1,14 +1,15 @@
 {
-  "extends": "./tsconfig.base.json", // O caminho foi atualizado
   "compilerOptions": {
-    "target": "ESNext",  // Alterado para ESNext
-    "module": "ESNext",  // Importante para usar import.meta
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "moduleResolution": "node", // Mantenha como 'node'
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true, // Adicione esta linha
+    "extends": "./tsconfig.base.json"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
