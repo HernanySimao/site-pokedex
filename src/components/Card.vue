@@ -62,7 +62,7 @@ defineProps({
           class="col-md-4 mb-5 pt-4 pt-md-0 mt-md-5 d-flex align-items-center"
         >
           <div
-            @click="sendId({ url: item?.url })"
+            @click="sendId({ url: item?.url, name: item?.name })"
             class="card w-100 cursor-pointer d-flex flex-column align-items-center position-relative"
           >
             <div
