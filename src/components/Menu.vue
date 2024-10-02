@@ -103,7 +103,7 @@ const toggleTheme = () => {
                 >
                   <img
                     class="lang-image"
-                    :src="`public/lang/${locale === 'en' ? 'pt' : 'en'}.png`"
+                    :src="`/lang/${locale === 'en' ? 'pt' : 'en'}.png`"
                     :alt="locale"
                   />
                 </button>
