@@ -4,6 +4,9 @@ import { onMounted } from "vue";
 import { useGetNumber } from "../../../composables/useGetNumber";
 import { useGetTypeColor } from "../../../composables/useGetTypeColor";
 
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n();
+
 const props = defineProps({
   data: {
     type: Object,
@@ -43,9 +46,15 @@ onMounted(() => {
 });
 </script>
 
+<script>
+export default {
+  name: "HomeDetails",
+};
+</script>
+
 <template>
   <section>
-    <div class="container">
+    <div class="container" data-aos="fade-left">
       <div class="row">
         <div class="card">
           <div v-if="data" class="card-body text-center">
@@ -54,7 +63,7 @@ onMounted(() => {
             </div>
             <span>#{{ id }} </span>
 
-            <h1>Estatísticas</h1>
+            <h1>{{ $t("home.details.statistics") }}</h1>
             <div
               data-aos="fade-right"
               class="d-flex justify-content-center flex-wrap text-center mb-5"
@@ -70,7 +79,7 @@ onMounted(() => {
               </div>
             </div>
 
-            <h1>Tipos</h1>
+            <h1>{{ $t("home.details.types") }}</h1>
             <div class="d-flex justify-content-center flex-wrap mb-5">
               <div
                 data-aos="fade-left"
@@ -85,10 +94,10 @@ onMounted(() => {
               </div>
             </div>
 
-            <h1 class="mb-4">Evoluções</h1>
+            <h1 class="mb-4">{{ $t("home.details.evolutions") }}</h1>
             <div class="d-flex justify-content-center flex-wrap">
               <div
-                data-aos="fade-up"
+                data-aos="fade-left"
                 class="col-md-3 align-items-center"
                 v-for="(evolution, i) in getEvolutions(evaluation?.chain)"
                 :key="i"
@@ -106,7 +115,7 @@ onMounted(() => {
           </div>
 
           <div class="text-center p-5 mt-5 mb-5" v-else>
-            <span>Selecione um Pokemon</span>
+            <span>{{ $t("home.details.selected") }} </span>
           </div>
         </div>
       </div>

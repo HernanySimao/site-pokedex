@@ -1,34 +1,46 @@
-<script setup>
+<script setup lang="ts">
 import HomeLayout from "../components/Home/Layout.vue";
 import HomeDetails from "../components/Home/Details/index.vue";
 import HomeDetailsMobile from "../components/Home/Details/Mobile.vue";
 
+import { Pokemon, EvolutionChain } from "../interfaces/Ipokemon";
+
 import { useIdStore } from "../stores/useIdStore";
 import { useCustomFetch } from "../composables/useCustomFetch";
 import { useGetNumber } from "../composables/useGetNumber";
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 const idStore = useIdStore();
-const pokemonData = ref([]);
-const pokemon = ref(null);
-const pokemonEvaluation = ref(null);
-const evaluation = ref(null);
-
-const get = async () => {
+const pokemonData = ref<Pokemon[]>([]);
+const pokemon = ref<Pokemon | null>(null);
+const pokemonEvaluation = ref<string | null>(null);
+const evaluation = ref<EvolutionChain | null>(null);
+const lang = localStorage.getItem("language") || "pt";
+const get = async (): Promise<void> => {
   try {
-    const data = await useCustomFetch(`pokemon/${idStore?.selectedId}`);
+    const data = await useCustomFetch<Pokemon>(
+      `pokemon/${idStore?.selectedId}?language=${lang}`
+    );
     pokemon.value = data;
   } catch (error) {
     console.error(error);
   }
 };
-const getEvaluation = async () => {
+
+const getEvaluation = async (): Promise<void> => {
   try {
-    const data = await useCustomFetch(`pokemon-species/${idStore?.selectedId}`);
-    pokemonEvaluation.value = data?.evolution_chain.url;
-    evaluation.value = await useCustomFetch(
-      `evolution-chain/${useGetNumber(pokemonEvaluation.value)}`
+    const data = await useCustomFetch<{ evolution_chain: { url: string } }>(
+      `pokemon-species/${idStore?.selectedId}?language=${lang}`
     );
+    pokemonEvaluation.value = data?.evolution_chain.url;
+
+    if (pokemonEvaluation.value) {
+      evaluation.value = await useCustomFetch<EvolutionChain>(
+        `evolution-chain/${useGetNumber(
+          pokemonEvaluation.value
+        )}?language=${lang}`
+      );
+    }
   } catch (error) {
     console.error(error);
   }
@@ -46,14 +58,14 @@ watch(
 <template>
   <div>
     <HomeLayout>
-      <HomeDetails
-        class="d-none d-md-inline"
+      <HomeDetailsMobile
+        class="d-inline-block d-md-none"
         :data="pokemon"
         :id="idStore?.selectedId"
         :evaluation="evaluation"
       />
-      <HomeDetailsMobile
-        class="d-inline-block d-md-none"
+      <HomeDetails
+        class="d-none d-md-inline"
         :data="pokemon"
         :id="idStore?.selectedId"
         :evaluation="evaluation"

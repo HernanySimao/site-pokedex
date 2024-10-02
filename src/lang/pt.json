@@ -1,0 +1,47 @@
+{
+
+  "routes": {
+    "home":"Inicio",
+    "favorite":"Favorito"
+  },
+
+  "home": {
+    "filter": {
+      "label": "Selecione o tipo de filtro:",
+      "placeholder": "Pesquisar por",
+      "name": "Nome",
+      "number": "Número",
+      "type": "Selecionar Tipo",
+       "limit": "Limite de pokemon"
+    },
+
+    "details": {
+      "label":"Detalhes do Pokémon",
+      "selected": "Selecione um Pokemon",
+      "statistics":"Estatísticas",
+      "types": "Tipos",
+      "evolutions":"Evoluções"
+    },
+
+    "buttons":{
+      "previous":"Anterior",
+      "next": "Próximo",
+      "close":" Fechar"
+    },
+
+    "alert":"Não encontramos nada, tente novamente"
+
+  },
+
+  "favorite": {
+    "label": "Os seus pokemon favoritos",
+    "description": "Deseja limpar a sua lista?",
+    "click":"Clica aqui",
+    "in": "Em",
+    "alert":"limparemos tudo, você pode cancelar",
+    "here": "aqui",
+     "noItem": "Nenhum item na lista."
+  }
+
+  
+}

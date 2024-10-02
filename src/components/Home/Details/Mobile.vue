@@ -3,7 +3,8 @@ import { ref } from "vue";
 import { useGetNumber } from "../../../composables/useGetNumber";
 import { useGetTypeColor } from "../../../composables/useGetTypeColor";
 import { useModalStore } from "../../../stores/modalStore";
-
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n();
 const modalStore = useModalStore();
 
 const props = defineProps({
@@ -42,6 +43,11 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
 };
 </script>
 
+<script>
+export default {
+  name: "HomeDetailsMobile",
+};
+</script>
 <template>
   <section>
     <div
@@ -52,7 +58,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Detalhes do Pokémon</h5>
+            <h5 class="modal-title">{{ $t("home.details.label") }}</h5>
             <button
               type="button"
               class="btn-close"
@@ -73,7 +79,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
                     </div>
                     <span>#{{ id }} </span>
 
-                    <h1>Estatísticas</h1>
+                    <h1>{{ $t("home.details.statistics") }}</h1>
                     <div
                       class="d-flex justify-content-center flex-wrap text-center mb-5"
                     >
@@ -88,7 +94,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
                       </div>
                     </div>
 
-                    <h1>Tipos</h1>
+                    <h1>{{ $t("home.details.types") }}</h1>
                     <div class="d-flex justify-content-center flex-wrap mb-5">
                       <div
                         class="types text-white col-12"
@@ -104,7 +110,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
                       </div>
                     </div>
 
-                    <h1 class="mb-4">Evoluções</h1>
+                    <h1 class="mb-4">{{ $t("home.details.evolutions") }}</h1>
                     <div class="d-flex justify-content-center flex-wrap">
                       <div
                         class="col-12 align-items-center mt-4"
@@ -128,7 +134,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
                   </div>
 
                   <div class="text-center p-5 mt-5 mb-5" v-else>
-                    <span>Selecione um Pokemon</span>
+                    <span>{{ $t("home.details.selected") }}</span>
                   </div>
                 </div>
               </div>
@@ -140,7 +146,7 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
               class="btn button-primary w-100"
               @click="modalStore.closeModal"
             >
-              Fechar
+              {{ $t("home.buttons.close") }}
             </button>
           </div>
         </div>
@@ -151,50 +157,50 @@ const getEvolutions = (evolutionChain, evolutions = []) => {
 
 <style lang="sass" scoped>
 .pokemon
-    width: 150px
-    height: 100%
+  width: 150px
+  height: 100%
 
 .evolution
-    width: 100px
-    height: 100px
-    object-fit: contain
+  width: 100px
+  height: 100px
+  object-fit: contain
 
 .stats
-    background: #f5f5f5
-    border-radius: 18px
-    margin: 5px
-    padding: 10px 2px
-    font-size: 13px
-    &:hover
-        background-color: #F0C900
-        color: #fff
+  background: #f5f5f5
+  border-radius: 18px
+  margin: 5px
+  padding: 10px 2px
+  font-size: 13px
+  &:hover
+    background-color: #F0C900
+    color: #fff
 .types
-    border-radius: 18px
-    margin: 2px
-    padding: 13px 2px
-    font-size: 13px
+  border-radius: 18px
+  margin: 2px
+  padding: 13px 2px
+  font-size: 13px
 
 /* Estilos básicos do modal */
 .modal
-    background: rgba(0, 0, 0, 0.5)
-    position: fixed
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    display: flex
-    align-items: center
-    justify-content: center
+  background: rgba(0, 0, 0, 0.5)
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  display: flex
+  align-items: center
+  justify-content: center
 
-    &-content
-        background: #fff
-        border-radius: 8px
-        padding: 20px
-        max-width: 800px
-        width: 100%
+  &-content
+    background: #fff
+    border-radius: 8px
+    padding: 20px
+    max-width: 800px
+    width: 100%
 
     &-header, &-footer
-        display: flex
-        justify-content: space-between
-        align-items: center
+      display: flex
+      justify-content: space-between
+      align-items: center
 </style>

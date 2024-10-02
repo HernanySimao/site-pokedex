@@ -3,14 +3,9 @@ import { ref, onMounted } from "vue";
 import Card from "../Card.vue";
 import AOS from "aos";
 
-defineProps({
-  data: {
-    type: Array,
-    required: true,
-    default: () => [],
-  },
-});
+import { useI18n } from "vue-i18n";
 
+const { locale } = useI18n();
 const favorites = ref([]);
 
 const showConfirmation = ref(false);
@@ -53,38 +48,46 @@ const cancelClear = () => {
 };
 </script>
 
+<script>
+export default {
+  name: "Favorite",
+};
+</script>
+
 <template>
   <section>
     <div class="container mt-5">
       <div class="row">
-        <h1>Os seus pokemon favoritos</h1>
+        <h1>{{ $t("favorite.label") }}</h1>
         <p v-if="favorites.length && !showConfirmation">
-          Deseja limpar a sua lista?
+          {{ $t("favorite.description") }}
           <span
-            class="primary-text-color cursor-pointer"
+            class="primary-text-color dark-color cursor-pointer"
             @click="clearSavedItems"
           >
-            Clica aqui
+            {{ $t("favorite.click") }}
           </span>
         </p>
 
         <div v-if="showConfirmation">
           <p>
-            Em
+            {{ $t("favorite.in") }}
             <strong class="primary-text-color">{{ countdown }}s</strong>
-            limparemos tudo, você pode cancelar
-            <span class="primary-text-color cursor-pointer" @click="cancelClear"
-              >aqui</span
+            {{ $t("favorite.alert") }}
+            <span
+              class="primary-text-color dark-color cursor-pointer"
+              @click="cancelClear"
+              >{{ $t("favorite.here") }}</span
             >.
           </p>
         </div>
       </div>
 
-      <div data-aos="fade-up" v-if="favorites.length">
+      <div data-aos="fade-up" class="mt-5 mt-md-4" v-if="favorites.length">
         <Card :data="favorites"></Card>
       </div>
       <div class="mt-5 p-5 text-center" v-else>
-        <span>Nenhum item na lista.</span>
+        <span>{{ $t("favorite.noItem") }}</span>
       </div>
     </div>
   </section>
