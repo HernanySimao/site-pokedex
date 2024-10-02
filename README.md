@@ -8,7 +8,7 @@ O objetivo deste projeto é simular uma Pokédex, permitindo ao usuário buscar 
 
 ## **Link da Aplicação**
 
-Acesse a aplicação hospedada na Vercel: [Pokédex](https://seu-link-aqui.vercel.app)
+Acesse a aplicação hospedada na Vercel: [Pokédex](https://site-pokedex-kappa.vercel.app/)
 
 ## **Tecnologias Utilizadas**
 

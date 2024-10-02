@@ -54,7 +54,7 @@ defineProps({
 
 <template>
   <section>
-    <div class="container">
+    <div class="container mt-5 mt-md-1">
       <div class="row">
         <div
           v-for="(item, i) in data"
