@@ -62,7 +62,7 @@ defineProps({
           class="col-md-4 mb-5 pt-4 pt-md-0 mt-md-5 d-flex align-items-center"
         >
           <div
-            @click="sendId({ url: item.url })"
+            @click="sendId({ url: item?.url })"
             class="card w-100 cursor-pointer d-flex flex-column align-items-center position-relative"
           >
             <div
@@ -77,19 +77,19 @@ defineProps({
               </div>
               <div class="text-center mt-5">
                 <span>#{{ useGetNumber(item?.url) }} </span>
-                <h3 class="text-capitalize">{{ item.name }}</h3>
+                <h3 class="text-capitalize">{{ item?.name }}</h3>
               </div>
 
               <img
                 class="heart"
                 :src="
-                  isItemSaved(item.url)
+                  isItemSaved(item?.url)
                     ? '/image/coracao-active.png'
                     : '/image/coracao.png'
                 "
                 alt=""
                 @click.stop="
-                  saveToLocalStorage({ name: item.name, url: item.url })
+                  saveToLocalStorage({ name: item?.name, url: item?.url })
                 "
               />
             </div>

@@ -222,13 +222,15 @@ const updateLimit = () => {
 </template>
 
 <style lang="sass" scoped>
+@import "../../assets/sass/variables"
+
 .form-control
   padding: 20px
   border-radius: 10px
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px
   padding-right: 80px
   &:focus-visible
-    border-color: #F0C900 !important
+    border-color: $primary-theme-color !important
 .limit-input
   padding: 13px
 .form-select
@@ -236,7 +238,7 @@ const updateLimit = () => {
   border-radius: 10px
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px
   &:focus-visible
-    border-color: #F0C900 !important
+    border-color: $primary-theme-color !important
 
 .icon
   width: 40px
@@ -248,6 +250,6 @@ const updateLimit = () => {
     padding: 10px
 
 .active
-  border: 1px solid #F0C900
+  border: 1px solid $primary-theme-color
   border-radius: 10px
 </style>
