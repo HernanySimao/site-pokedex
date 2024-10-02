@@ -10,6 +10,27 @@ body
 .cursor-pointer
     cursor: pointer
 
+.scrollable-cards
+    max-height: 400px
+    overflow-y: auto
+    margin-top: 20px
+    padding: 10px
+    border-radius: 10px
+
+.scrollable-cards::-webkit-scrollbar
+    width: 8px
+    background-color: transparent
+
+.scrollable-cards::-webkit-scrollbar-thumb
+    background-color: #F0C900
+    border-radius: 10px
+
+.scrollable-cards::-webkit-scrollbar-thumb:hover
+    background-color: #d4a900
+
+.scrollable-cards::-webkit-scrollbar-track
+    background-color: rgba(0, 0, 0, 0.1)
+
 // Set colors
 .primary-text-color
     color: $primary-theme-color

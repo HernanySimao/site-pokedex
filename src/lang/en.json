@@ -9,7 +9,8 @@
       "placeholder": "Search by",
       "name": "Name",
       "number": "Number",
-      "type": "Select Type"
+      "type": "Select Type",
+      "limit": "Pokémon limit" 
     },
 
     "details": {

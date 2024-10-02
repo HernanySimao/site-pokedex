@@ -4,16 +4,19 @@ import AOS from "aos";
 import Card from "../Card.vue";
 import { useGetNumber } from "../../composables/useGetNumber";
 import { useCustomFetch } from "../../composables/useCustomFetch";
-
 import { useI18n } from "vue-i18n";
-const { locale } = useI18n();
 
+const { locale } = useI18n();
 const pokemons = ref([]);
 const nextPage = ref(null);
 const previousPage = ref(null);
 const lang = localStorage.getItem("language") || "pt";
+const maxPokemons = 1008;
+
+const limit = ref(10);
+
 const fetchPokemons = async (
-  url = `pokemon/?limit=6&offset=0&language=${lang}`
+  url = `pokemon/?limit=${limit.value}&offset=0&language=${lang}`
 ) => {
   try {
     const response = await useCustomFetch(url);
@@ -32,6 +35,7 @@ const fetchPokemons = async (
     console.error("Erro ao buscar lista de Pokémon:", error);
   }
 };
+
 const types = ref([]);
 const selectedType = ref("");
 
@@ -52,9 +56,9 @@ const fetchPokemonsByType = async () => {
     if (selectedTypeObj) {
       try {
         const response = await useCustomFetch(
-          `type/${useGetNumber(selectedTypeObj.url)}`
+          `type/${useGetNumber(selectedTypeObj.url)}?language=${lang}`
         );
-        pokemons.value = response.pokemon.slice(0, 6).map((p) => ({
+        pokemons.value = response.pokemon.slice(0, limit.value).map((p) => ({
           name: p.pokemon.name,
           url: p.pokemon.url,
         }));
@@ -79,16 +83,23 @@ const searchQuery = ref("");
 const filteredData = computed(() => {
   return pokemons.value.filter((item) => {
     const number = useGetNumber(item.url);
-
     if (searchType.value === 1) {
       return item.name.toLowerCase().includes(searchQuery.value.toLowerCase());
     } else if (searchType.value === 2) {
       return number && number.includes(searchQuery.value);
     }
-
     return true;
   });
 });
+
+const updateLimit = () => {
+  const inputLimit = parseInt(limit.value);
+  if (inputLimit >= 1 && inputLimit <= maxPokemons) {
+    fetchPokemons();
+  } else {
+    limit.value = 10;
+  }
+};
 </script>
 
 <template>
@@ -153,16 +164,30 @@ const filteredData = computed(() => {
                 </option>
               </select>
             </div>
+
+            <div class="col-md-3 mt-2 mt-md-4">
+              <input
+                v-model="limit"
+                type="number"
+                min="1"
+                max="1008"
+                :placeholder="$t('home.filter.limit')"
+                class="form-control limit-input"
+                @change="updateLimit"
+              />
+              <span v-if="limit"> {{ $t("home.filter.limit") }} </span>
+            </div>
           </div>
 
-          <Card
-            data-aos="fade-up"
-            v-if="filteredData.length"
-            :data="filteredData"
-            class="mt-5 pt-5"
-          />
-          <div class="text-center mt-5 mb-5 p-5" v-else>
-            <span> {{ $t("home.alert") }} </span>
+          <div class="scrollable-cards">
+            <Card
+              data-aos="fade-up"
+              v-if="filteredData.length"
+              :data="filteredData"
+            />
+            <div class="text-center mt-5 mb-5 p-5" v-else>
+              <span> {{ $t("home.alert") }} </span>
+            </div>
           </div>
 
           <div
@@ -196,7 +221,6 @@ const filteredData = computed(() => {
   </section>
 </template>
 
-
 <style lang="sass" scoped>
 .form-control
   padding: 20px
@@ -205,7 +229,8 @@ const filteredData = computed(() => {
   padding-right: 80px
   &:focus-visible
     border-color: #F0C900 !important
-
+.limit-input
+  padding: 13px
 .form-select
   padding: 12px
   border-radius: 10px

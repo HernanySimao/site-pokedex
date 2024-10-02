@@ -11,7 +11,8 @@
       "placeholder": "Pesquisar por",
       "name": "Nome",
       "number": "Número",
-      "type": "Selecionar Tipo"
+      "type": "Selecionar Tipo",
+       "limit": "Limite de pokemon"
     },
 
     "details": {
