@@ -1,9 +1,10 @@
 {
+  "extends": "./tsconfig.base.json", // O caminho foi atualizado
   "compilerOptions": {
     "target": "ESNext",  // Alterado para ESNext
     "module": "ESNext",  // Importante para usar import.meta
     "lib": ["ESNext", "DOM"],
-    "moduleResolution": "node", // Tente mudar de 'bundler' para 'node'
+    "moduleResolution": "node", // Mantenha como 'node'
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
